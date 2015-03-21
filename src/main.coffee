@@ -25,7 +25,7 @@ else
 console.log "mongo credentials : #{JSON.stringify(mongo)}"
 
 # connect to mongoose
-mongoose.connect(mongo.url, mongo)
+mongoose.connect(mongo.url)
 mongoose.connection.on('error', console.error.bind(console, 'connection error:'))
 mongoose.connection.once('open', (callback) ->
   console.log 'connected to mongo'
