@@ -24,14 +24,44 @@ else
 
 # connect to mongoose
 mongoose.connect(mongo.url, mongo)
+mongoose.connection.on('error', console.error.bind(console, 'connection error:'))
+mongoose.connection.once('open', (callback) ->
+  console.log 'connected to mongo'
+)
 
 # express middleware
-app.use(bodyParser.json())
-app.use(cors({
+app.use bodyParser.json()
+app.use cors({
   allowedOrigins: [
     'localhost:9000'
   ]
-}))
+})
+
+# setup passport
+passport        = require('passport')
+GitHubStrategy  = require('passport-github').Strategy
+
+GITHUB_CLIENT_ID = "--insert-github-client-id-here--"
+GITHUB_CLIENT_SECRET = "--insert-github-client-secret-here--";
+
+passport.serializeUser (user, done) ->
+  done(null, user)
+
+passport.deserializeUser (obj, done) ->
+  done(null, obj)
+
+passport.use new GitHubStrategy({
+    clientID: GITHUB_CLIENT_ID,
+    clientSecret: GITHUB_CLIENT_SECRET,
+    callbackURL: "http://127.0.0.1:3000/auth/github/callback"
+  }, (accessToken, refreshToken, profile, done) ->
+    process.nextTick ->
+      return done(null, profile);
+  ) # end passport.use
+
+# passport middleware
+app.use passport.initialize()
+app.use passport.session()
 
 appEnv    = cfenv.getAppEnv()
 instance  = appEnv.app.instance_index || 0
@@ -45,9 +75,13 @@ server = app.listen(appEnv.port, ->
 )
 
 # register routes
-require('./auth')(app, {
+require('./auth')(app, passport, {
   'User': User
 })
-require('./api')(app, {
+require('./api')(app, passport, {
   'User': User
 })
+
+# test route
+app.get '/', (req, res) ->
+  res.write 'Hello World!'

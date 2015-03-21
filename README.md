@@ -21,6 +21,8 @@ Questions? Try the support group
 > db.createUser({user: 'bluehub', pwd: 'bluehub', roles: [ {db: 'bluehub', role: 'admin'} ]});
 ```
 
+To run the project simply run : `node index.js`
+
 ## Authors
 
 - Dawson Reid <dreid93@gmail.com>

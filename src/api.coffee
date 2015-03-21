@@ -1,6 +1,6 @@
 'use strict'
 
-module.exports = (app, models) ->
+module.exports = (app, passport, models) ->
 
   # list user repos
   app.get '/repos', (req, res) ->
