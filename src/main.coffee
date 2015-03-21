@@ -7,14 +7,23 @@ mongoose    = require('mongoose')
 cors        = require('cors')
 bodyParser  = require('body-parser')
 
+# setup models
+mongoose  = require('mongoose')
+User = mongoose.model 'User', require('./models/user')
+
+# read mongo configuration
+mongo = null
 if process.env.VCAP_SERVICES
-  env = JSON.parse(process.env.VCAP_SERVICES);
-  mongo = env['mongodb-2.4'][0].credentials;
+  env = JSON.parse(process.env.VCAP_SERVICES)
+  mongo = env['mongodb-2.4'][0].credentials
 else
   mongo =
-    "username": "user1",
-    "password": "secret",
-    "url": "mongodb://localhost:27017/test"
+    "username": "bluehub",
+    "password": "bluehub",
+    "url": "mongodb://localhost:27017/bluehub"
+
+# connect to mongoose
+mongoose.connect(mongo.url, mongo)
 
 # express middleware
 app.use(bodyParser.json())
@@ -35,5 +44,10 @@ server = app.listen(appEnv.port, ->
   return
 )
 
-# register authentication routes
-require('./auth')(app)
+# register routes
+require('./auth')(app, {
+  'User': User
+})
+require('./api')(app, {
+  'User': User
+})

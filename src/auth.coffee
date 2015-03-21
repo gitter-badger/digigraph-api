@@ -1,5 +1,6 @@
+'use strict'
 
-module.exports = (app) ->
+module.exports = (app, models) ->
 
   console.log 'register auth routes'
 
