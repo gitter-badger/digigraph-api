@@ -2,6 +2,8 @@
 
 module.exports = (app, passport, models) ->
 
+  console.log 'register api routes'
+
   # list user repos
   app.get '/repos', (req, res) ->
     return
