@@ -1,0 +1,33 @@
+{
+  "name": "bluehub-api",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:dreid93/bluehub-api.git"
+  },
+  "keywords": [
+    "Bluemix",
+    "Github"
+  ],
+  "author": "Dawson Reid",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dreid93/bluehub-api/issues"
+  },
+  "homepage": "https://github.com/dreid93/bluehub-api",
+  "dependencies": {
+    "body-parser": "^1.12.2",
+    "cfenv": "^1.0.0",
+    "coffee-script": "^1.9.1",
+    "cors": "^2.5.3",
+    "express": "^4.12.3",
+    "mongoose": "^3.8.25",
+    "passport": "^0.2.1",
+    "passport-github": "^0.1.5"
+  }
+}
