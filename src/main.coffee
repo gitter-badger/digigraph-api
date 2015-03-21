@@ -34,6 +34,7 @@ app.use bodyParser.json()
 app.use cors({
   allowedOrigins: [
     'localhost:9000'
+    'http://thebluehub.mybluemix.net'
   ]
 })
 
